@@ -50,12 +50,12 @@ local function createGUI()
 
     local closeButton = Instance.new("TextButton")
     closeButton.Name = "CloseButton"
-    closeButton.Size = UDim2.new(0, 50, 0, 50)
+    closeButton.Size = UDim2.new(0, 25, 0, 25)
     closeButton.Position = UDim2.new(1, -50, 0, 0)
     closeButton.BackgroundColor3 = Color3.new(1, 0, 0)
     closeButton.Font = Enum.Font.SourceSans
     closeButton.TextColor3 = Color3.new(1, 1, 1)
-    closeButton.TextSize = 5
+    closeButton.TextSize = 14
     closeButton.Text = "X"
     closeButton.Parent = frame
 
