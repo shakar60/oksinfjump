@@ -1,1 +1,96 @@
-local gui = Instance.new("ScreenGui") gui.Name = "DraggableGUI" gui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui") local frame = Instance.new("Frame") frame.Name = "DraggableFrame" frame.Size = UDim2.new(0, 200, 0, 100) frame.Position = UDim2.new(0, 100, 0, 100) frame.BackgroundTransparency = 0.4 frame.BackgroundColor3 = Color3.new(0, 0, 0) frame.BorderSizePixel = 0 frame.Active = true frame.Draggable = true frame.Parent = gui local button = Instance.new("TextButton") button.Name = "InfJumpButton" button.Size = UDim2.new(0.8, 0, 0, 30) button.Position = UDim2.new(0.1, 0, 0.5, -15) button.BackgroundColor3 = Color3.new(0, 0.5, 1) button.Font = Enum.Font.SourceSans button.TextColor3 = Color3.new(1, 1, 1) button.TextSize = 14 button.Text = "InfJump" button.Parent = frame local label = Instance.new("TextLabel") label.Name = "CreatorLabel" label.Size = UDim2.new(0, 200, 0, 20) label.Position = UDim2.new(0, 0, 0, -20) label.BackgroundTransparency = 1 label.Font = Enum.Font.SourceSansBold label.TextColor3 = Color3.new(1, 1, 1) label.TextSize = 14 label.Text = "Made by IAB" label.Parent = frame local infiniteJumpEnabled = false local function onButtonClick() infiniteJumpEnabled = not infiniteJumpEnabled button.Text = infiniteJumpEnabled and "Disable InfJump" or "Enable InfJump" end button.MouseButton1Click:Connect(onButtonClick) game:GetService("UserInputService").JumpRequest:Connect(function() if infiniteJumpEnabled then game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):ChangeState("Jumping") end end)
+-- Function to create the GUI
+local function createGUI()
+    local gui = Instance.new("ScreenGui")
+    gui.Name = "DraggableGUI"
+    gui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+    local frame = Instance.new("Frame")
+    frame.Name = "DraggableFrame"
+    frame.Size = UDim2.new(0, 200, 0, 100)
+    frame.Position = UDim2.new(0, 100, 0, 100)
+    frame.BackgroundTransparency = 0.4
+    frame.BackgroundColor3 = Color3.new(0, 0, 0)
+    frame.BorderSizePixel = 0
+    frame.Active = true
+    frame.Draggable = true
+    frame.Parent = gui
+
+    local label = Instance.new("TextLabel")
+    label.Name = "CreatorLabel"
+    label.Size = UDim2.new(0, 200, 0, 20)
+    label.Position = UDim2.new(0, 0, 0, 0)
+    label.BackgroundTransparency = 1
+    label.Font = Enum.Font.SourceSansBold
+    label.TextColor3 = Color3.new(1, 1, 1)
+    label.TextSize = 14
+    label.Text = "Made by IAB"
+    label.Parent = frame
+
+    local button = Instance.new("TextButton")
+    button.Name = "InfJumpButton"
+    button.Size = UDim2.new(0.8, 0, 0, 30)
+    button.Position = UDim2.new(0.1, 0, 0.5, -15)
+    button.BackgroundColor3 = Color3.new(0, 0.5, 1)
+    button.Font = Enum.Font.SourceSans
+    button.TextColor3 = Color3.new(1, 1, 1)
+    button.TextSize = 14
+    button.Text = "Enable InfJump"
+    button.Parent = frame
+
+    local editedLabel = Instance.new("TextLabel")
+    editedLabel.Name = "EditedLabel"
+    editedLabel.Size = UDim2.new(0, 200, 0, 20)
+    editedLabel.Position = UDim2.new(0, 0, 0.7, 0)  -- Adjust this position as needed
+    editedLabel.BackgroundTransparency = 1
+    editedLabel.Font = Enum.Font.SourceSansBold
+    editedLabel.TextColor3 = Color3.new(1, 1, 1)
+    editedLabel.TextSize = 14
+    editedLabel.Text = "Edited By sh4k4r6o"
+    editedLabel.Parent = frame
+
+    local closeButton = Instance.new("TextButton")
+    closeButton.Name = "CloseButton"
+    closeButton.Size = UDim2.new(0, 50, 0, 50)
+    closeButton.Position = UDim2.new(1, -50, 0, 0)
+    closeButton.BackgroundColor3 = Color3.new(1, 0, 0)
+    closeButton.Font = Enum.Font.SourceSans
+    closeButton.TextColor3 = Color3.new(1, 1, 1)
+    closeButton.TextSize = 5
+    closeButton.Text = "X"
+    closeButton.Parent = frame
+
+    local infiniteJumpEnabled = false
+
+    local function onButtonClick()
+        infiniteJumpEnabled = not infiniteJumpEnabled
+        button.Text = infiniteJumpEnabled and "Disable InfJump" or "Enable InfJump"
+    end
+
+    button.MouseButton1Click:Connect(onButtonClick)
+
+    closeButton.MouseButton1Click:Connect(function()
+        infiniteJumpEnabled = false
+        button.Text = "Enable InfJump"
+        gui:Destroy()
+    end)
+
+    game:GetService("UserInputService").JumpRequest:Connect(function()
+        if infiniteJumpEnabled then
+            game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):ChangeState("Jumping")
+        end
+    end)
+end
+
+-- Function to recreate the GUI upon character respawn
+local function onCharacterAdded(character)
+    createGUI()
+end
+
+-- Connect to CharacterAdded event
+local player = game.Players.LocalPlayer
+player.CharacterAdded:Connect(onCharacterAdded)
+
+-- Create the GUI for the current character
+if player.Character then
+    createGUI()
+end
