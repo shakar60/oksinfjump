@@ -48,10 +48,10 @@ local function createGUI()
     editedLabel.Text = "Edited By sh4k4r6o"
     editedLabel.Parent = frame
 
-    local closeButton = Instance.new("TextButton")
+  local closeButton = Instance.new("TextButton")
     closeButton.Name = "CloseButton"
-    closeButton.Size = UDim2.new(0, 25, 0, 25)
-    closeButton.Position = UDim2.new(1, -50, 0, 0)
+    closeButton.Size = UDim2.new(0, 20, 0, 20)
+    closeButton.Position = UDim2.new(1, -25, 0, 5)
     closeButton.BackgroundColor3 = Color3.new(1, 0, 0)
     closeButton.Font = Enum.Font.SourceSans
     closeButton.TextColor3 = Color3.new(1, 1, 1)
